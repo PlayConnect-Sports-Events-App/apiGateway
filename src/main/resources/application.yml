@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: event-service
+          uri: lb://event-service
+          predicates:
+            - Path=/api/event/**
+          filters:
+            - JWTAuthenticationFilter
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+
+
+        - id: search-service
+          uri: lb://search-service
+          predicates:
+            - Path=/api/search/**
+          filters:
+            - JWTAuthenticationFilter
+
+        - id: comment-service
+          uri: lb://comment-service
+          predicates:
+            - Path=/api/comment/**
+          filters:
+            - JWTAuthenticationFilter
+
+        - id: discovery-server
+          uri: http://host.docker.internal:8761
+          predicates:
+            - Path=/eureka/web
+          filters:
+            - SetPath=/
+        - id: discovery-server-static
+          uri: http://eureka:password@${app.eureka-server}:8761
+          predicates:
+            - Path=/eureka/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://host.docker.internal:8761/eureka/
+      #defaultZone: http://localhost:8761/eureka/
+app:
+  eureka-server: host.docker.internal
+  #eureka-server: localhost
+
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    com.netflix.eureka: DEBUG
+    com.netflix.discovery: DEBUG
