@@ -12,7 +12,7 @@ spring:
             - JWTAuthenticationFilter
 
         - id: user-service
-          uri: lb://user-service
+          uri: https://user-service-xwjwz3lfdq-ez.a.run.app
           predicates:
             - Path=/api/user/**
 
@@ -38,7 +38,7 @@ spring:
           filters:
             - SetPath=/
         - id: discovery-server-static
-          uri: http://eureka:password@${app.eureka-server}:8761
+          uri: https://discovery-service-xwjwz3lfdq-ez.a.run.app
           predicates:
             - Path=/eureka/**
 
@@ -47,7 +47,7 @@ eureka:
     serviceUrl:
       #defaultZone: http://host.docker.internal:8761/eureka/
       #defaultZone: http://localhost:8761/eureka/
-      defaultZone: https://discovery-service-xwjwz3lfdq-ez.a.run.app/eureka/
+      defaultZone: https://discovery-service-xwjwz3lfdq-ez.a.run.app/
 app:
   #eureka-server: host.docker.internal
   #eureka-server: localhost
