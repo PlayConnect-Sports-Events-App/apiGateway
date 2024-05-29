@@ -13,7 +13,8 @@ public class GatewayCorsConfiguration {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:3000");
+        //config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("https://api-gateway-xwjwz3lfdq-ez.a.run.app");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
